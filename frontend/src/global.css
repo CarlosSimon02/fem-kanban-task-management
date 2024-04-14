@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --primary: 0 0% 100%;
+    --primary-foreground: 236.67, 100%, 3.53%;
+
+    --secondary: 220 69.23% 97.45%;
+    --secondary-foreground: 216.36 15.21% 57.45%;
+    --secondary-hover: 220 69.23% 97.45%;
+
+    --accent: 242.31 48.15% 57.65%;
+    --accent-foreground: 0 0% 100%;
+    --accent-hover: 242.64 100% 82.16%;
+
+    --background: var(--secondary);
+    --foreground: var(--secondary-foreground);
+
+    --card: 0 0% 100%;
+    --card-foreground: 216.36 15.21% 57.45%;
+    --card-shadow: 0 0.375rem 0.25rem 0 hsla(220, 40%, 35.29%, 10.15%);
+
+    --popover: var(--primary);
+    --popover-foreground: var(--secondary-foreground);
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --destructive-hover: 0 100% 79.8%;
+
+    --border: 220.91 68.75% 93.73%;
+    --input: 216.36, 15.21%, 57.45%, 0.25;
+    --ring: var(--accent);
+
+    --radius: 0.5rem;
+
+    --new-column-bg: linear-gradient(
+      hsl(218.82, 62.96%, 94.71%, 100%),
+      hsl(218.82, 62.96%, 94.71%, 50%)
+    );
+
+    --radix-select-trigger-height: 5rem;
+  }
+
+  .dark {
+    color-scheme: dark;
+    --primary: 235 12.24% 19.22%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 235 15.79% 14.9%;
+    --secondary-foreground: 216.36 15.21% 57.45%;
+    --secondary-hover: 0 0% 100%;
+
+    --accent: 242.31 48.15% 57.65%;
+    --accent-foreground: 0 0% 100%;
+    --accent-hover: 242.64 100% 82.16%;
+
+    --background: var(--secondary);
+    --foreground: var(--secondary-foreground);
+
+    --card: 235 12.24% 19.22%;
+    --card-foreground: 216.36 15.21% 57.45%;
+    --card-shadow: 0 0.375rem 0.25rem 0 hsla(0, 0%, 0%, 20%);
+
+    --popover: var(--primary);
+    --popover-foreground: var(--secondary-foreground);
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --destructive-hover: 0 100% 79.8%;
+
+    --border: 236.25 11.43% 27.45%;
+    --input: 216.36, 15.21%, 57.45%, 0.25;
+    --ring: var(--accent-hover);
+
+    --new-column-bg: linear-gradient(
+      hsla(235, 12.24%, 19.22%, 25%),
+      hsla(235, 12.24%, 19.22%, 12.5%)
+    );
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background font-plusJakartaSans text-foreground [&_:focus-visible]:outline-dashed [&_:focus-visible]:outline-[0.125rem] [&_:focus-visible]:outline-ring;
+  }
+
+  #root {
+    @apply flex h-screen w-screen flex-col;
+  }
+}
+
+@layer components {
+  .clickable {
+    @apply transition-colors disabled:pointer-events-none disabled:opacity-50 [&_g]:transition-colors [&_path]:transition-colors;
+  }
+}
