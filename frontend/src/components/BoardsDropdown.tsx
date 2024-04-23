@@ -1,4 +1,5 @@
 import useDelayUnmount from "@/hooks/useDelayUnmount";
+import { cn } from "@/lib/utils";
 import { useBoardStore } from "@/store/boardStore";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { Portal } from "@radix-ui/react-portal";
@@ -16,9 +17,19 @@ const BoardsDropdown = () => {
 
   return (
     <>
-      <span className="text-xl font-bold text-primary-foreground max-md:hidden lg:text-2xl">
-        {currentBoardIndex !== null && boards[currentBoardIndex].name}
-      </span>
+      <div
+        className={cn(
+          "text-left text-xl font-bold max-md:hidden lg:text-2xl",
+          "min-w-0 max-w-[30ch] flex-shrink overflow-hidden text-ellipsis whitespace-nowrap",
+          currentBoardIndex !== null
+            ? "text-primary-foreground"
+            : "text-secondary-foreground",
+        )}
+      >
+        {currentBoardIndex !== null
+          ? boards[currentBoardIndex].name
+          : "No Boards Found"}
+      </div>
       <Portal container={rootElement as HTMLElement} asChild>
         {shouldRenderChild && (
           <div
@@ -29,11 +40,15 @@ const BoardsDropdown = () => {
       </Portal>
       <DropdownMenu.Root onOpenChange={(open: boolean) => setIsOpen(open)}>
         <DropdownMenu.Trigger asChild>
-          <button className="flex cursor-pointer items-center gap-1 text-lg font-bold text-primary-foreground md:hidden [&_>_*]:transition-transform">
-            {currentBoardIndex !== null && boards[currentBoardIndex].name}
+          <button className="flex min-w-[0] cursor-pointer items-center gap-1 text-left text-lg font-bold text-primary-foreground md:hidden [&_>_*]:transition-transform">
+            <span className="max-w-[20ch] overflow-hidden text-ellipsis whitespace-nowrap">
+              {currentBoardIndex !== null
+                ? boards[currentBoardIndex].name
+                : "No Boards Found"}
+            </span>
             <ChevronDown
               data-state={isOpen ? "open" : "closed"}
-              className="ml-[0.375rem] w-2 rotate-0 transform data-[state=open]:rotate-180"
+              className="ml-[0.375rem] w-2 flex-shrink-0 rotate-0 transform data-[state=open]:rotate-180"
             />
           </button>
         </DropdownMenu.Trigger>
