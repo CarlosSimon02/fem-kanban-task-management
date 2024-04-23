@@ -10,9 +10,6 @@ const App = () => {
   const theme = useThemeStore((state) => state.theme);
   const systemTheme = useThemeStore((state) => state.systemTheme);
   const setBoards = useBoardStore((state) => state.setBoards);
-  const setCurrentBoardIndex = useBoardStore(
-    (state) => state.setCurrentBoardIndex,
-  );
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -32,23 +29,27 @@ const App = () => {
       dataBoards.map((board) => ({
         ...board,
         id: uuidv4(),
-        columns: board.columns.map((column) => ({
-          ...column,
-          id: uuidv4(),
-          tasks: column.tasks.map((task) => ({
-            ...task,
-            id: uuidv4(),
-            subtasks: task.subtasks.map((subtask) => ({
-              ...subtask,
+        columns: board.columns.map((column) => {
+          const columnId = uuidv4();
+
+          return {
+            ...column,
+            id: columnId,
+            tasks: column.tasks.map((task) => ({
               id: uuidv4(),
+              title: task.title,
+              description: task.description,
+              statusId: columnId,
+              subtasks: task.subtasks.map((subtask) => ({
+                ...subtask,
+                id: uuidv4(),
+              })),
             })),
-          })),
-        })),
+          };
+        }),
       })),
     );
-
-    setCurrentBoardIndex(0);
-  }, [setBoards, setCurrentBoardIndex]);
+  }, [setBoards]);
 
   return <RouterProvider router={router} />;
 };
