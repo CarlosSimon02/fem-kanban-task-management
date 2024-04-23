@@ -102,13 +102,15 @@ export const BoardsControlSidebar = () => {
                           <RadioGroup.Item
                             ref={provided.innerRef}
                             value={board.id}
-                            className="clickable group flex w-full items-center gap-3 rounded-r-3xl px-6 py-[0.875rem] text-[0.9375rem] font-bold hover:bg-secondary-hover hover:text-accent data-[state=checked]:!bg-accent data-[state=checked]:!text-accent-foreground lg:px-8"
+                            className="clickable group flex w-full items-center gap-3 rounded-r-3xl px-6 py-[0.875rem] text-left text-[0.9375rem] font-bold hover:bg-secondary-hover hover:text-accent data-[state=checked]:!bg-accent data-[state=checked]:!text-accent-foreground lg:px-8"
                             {...provided.draggableProps}
                           >
                             <div {...provided.dragHandleProps}>
                               <DragIcon className="w-4 [&_path]:stroke-secondary-foreground group-hover:[&_path]:stroke-accent group-data-[state=checked]:[&_path]:stroke-accent-foreground" />
                             </div>
-                            <span>{board.name}</span>
+                            <span className="overflow-hidden text-ellipsis whitespace-nowrap">
+                              {board.name}
+                            </span>
                           </RadioGroup.Item>
                         </BoardOptionsContextMenu>
                       )}
@@ -158,7 +160,7 @@ export const BoardsControlDropdown = () => {
                       ref={provided.innerRef}
                       value={board.id}
                       className={cn(
-                        "clickable group flex w-full cursor-pointer items-center gap-3 rounded-r-3xl px-6 py-[0.875rem] text-[0.9375rem] font-bold !outline-none hover:bg-secondary-hover hover:text-accent data-[state=checked]:!bg-accent data-[state=checked]:!text-accent-foreground lg:px-8",
+                        "clickable group flex w-full cursor-pointer items-center gap-3 rounded-r-3xl px-6 py-[0.875rem] text-left text-[0.9375rem] font-bold !outline-none hover:bg-secondary-hover hover:text-accent data-[state=checked]:!bg-accent data-[state=checked]:!text-accent-foreground lg:px-8",
                         snapshot.isDragging && "!left-auto !top-auto",
                       )}
                       {...provided.draggableProps}
@@ -166,7 +168,9 @@ export const BoardsControlDropdown = () => {
                       <div {...provided.dragHandleProps}>
                         <DragIcon className="w-4 [&_path]:stroke-secondary-foreground group-hover:[&_path]:stroke-accent group-data-[state=checked]:[&_path]:stroke-accent-foreground" />
                       </div>
-                      <span>{board.name}</span>
+                      <span className="overflow-hidden text-ellipsis whitespace-nowrap">
+                        {board.name}
+                      </span>
                     </DropdownMenu.RadioItem>
                   )}
                 </Draggable>
