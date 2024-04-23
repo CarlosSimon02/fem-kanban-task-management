@@ -26,28 +26,24 @@ const DeleteColumnAlert = ({
   onOpenChange,
 }: DeleteColumnAlertProps) => {
   const [defaultOpen, setDefaultOpen] = useState(false);
-  const deleteColToCurrentBoard = useBoardStore(
-    (state) => state.deleteColToCurrentBoard,
-  );
+  const deleteCol = useBoardStore((state) => state.deleteCol);
 
   return (
     <AlertDialog
       open={open !== undefined ? open : defaultOpen}
       onOpenChange={onOpenChange !== undefined ? onOpenChange : setDefaultOpen}
     >
-      {children && <AlertDialogTrigger>{children}</AlertDialogTrigger>}
+      {children && <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Delete this column?</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to delete the ‘{columnToDelete.name}’ column?
-            This action will remove all tasks and cannot be reversed.
+            Are you sure you want to delete the ‘{columnToDelete.name}’ column
+            and its associated task(s)? This action cannot be reversed.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction
-            onClick={() => deleteColToCurrentBoard(columnToDelete.id)}
-          >
+          <AlertDialogAction onClick={() => deleteCol(columnToDelete.id)}>
             Delete
           </AlertDialogAction>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
