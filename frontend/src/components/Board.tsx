@@ -38,8 +38,8 @@ const Board = () => {
         );
 
         if (draggedTask) {
-          draggedTask.status =
-            boardToUpdate.columns[destinationColumnIndex].name;
+          draggedTask.statusId =
+            boardToUpdate.columns[destinationColumnIndex].id;
 
           boardToUpdate.columns[sourceColumnIndex].tasks.splice(
             source.index,
