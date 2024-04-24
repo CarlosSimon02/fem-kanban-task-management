@@ -10,9 +10,7 @@ type ThemeSwitcherProps = {
 
 const ThemeSwitcher = ({ className }: ThemeSwitcherProps) => {
   const theme = useThemeStore((state) => state.theme);
-  const systemTheme = useThemeStore((state) => state.systemTheme);
   const setTheme = useThemeStore((state) => state.setTheme);
-  const darkOrLight = theme === "system" ? systemTheme : theme;
 
   return (
     <fieldset
@@ -21,11 +19,13 @@ const ThemeSwitcher = ({ className }: ThemeSwitcherProps) => {
         className,
       )}
     >
-      <VisuallyHidden>Switch to {darkOrLight} theme</VisuallyHidden>
+      <VisuallyHidden>
+        Switch to {theme === "dark" ? "light" : "dark"} theme
+      </VisuallyHidden>
       <LightThemeIcon className="w-[1.145625rem] [&_path]:fill-secondary-foreground" />
       <Switch.Root
         className="clickable h-5 w-10 rounded-full bg-accent hover:bg-accent-hover"
-        defaultChecked={darkOrLight === "dark"}
+        defaultChecked={theme === "dark"}
         onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
       >
         <Switch.Thumb className="block h-[0.875rem] w-[0.875rem] translate-x-[0.1875rem] rounded-full bg-accent-foreground transition-transform data-[state=checked]:translate-x-[1.4375rem]" />
