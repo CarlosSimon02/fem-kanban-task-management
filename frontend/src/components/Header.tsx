@@ -1,22 +1,22 @@
 import { useBoardStore } from "@/store/boardStore";
+import { useAuth0 } from "@auth0/auth0-react";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import BoardsDropdown from "./BoardsDropdown";
+import LogIn from "./LogIn";
+import Profile from "./Profile";
 import { BoardOptionsDropdownMenu } from "./dialogs/BoardOptions";
 import TaskFormDialog from "./dialogs/TaskFormDialog";
-import { Logo, LogoMobile, Plus, VerticalEllipsis } from "./ui/Icons";
+import { Plus, VerticalEllipsis } from "./ui/Icons";
 
 const Header = () => {
+  const { isAuthenticated } = useAuth0();
   const currentBoardIndex = useBoardStore((state) => state.currentBoardIndex);
   const boards = useBoardStore((state) => state.boards);
 
   return (
     <header className="z-10 flex overflow-hidden bg-primary md:border-b-[0.0625rem]">
       <div className="flex flex-shrink-0 items-center px-4 py-4 md:w-[16.25rem] md:border-r-[0.0625rem] md:px-6 lg:w-[18.75rem] lg:px-8">
-        <LogoMobile className="w-6 md:hidden" />
-        <Logo className="w-[9.533125rem] max-md:hidden [&_path]:fill-primary-foreground" />
-        <VisuallyHidden.Root>
-          <h1>Kanban Task Management</h1>
-        </VisuallyHidden.Root>
+        {isAuthenticated ? <Profile /> : <LogIn />}
       </div>
       <div className="flex min-w-0 flex-1 items-center justify-between gap-8 py-4 pr-4 md:px-6 lg:px-8">
         <BoardsDropdown />
