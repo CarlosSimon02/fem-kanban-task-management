@@ -24,7 +24,7 @@ const ColumnsSection = () => {
     <div className="flex flex-col items-center gap-3">
       <FormField
         control={control}
-        name="menuItems"
+        name="columns"
         render={() => (
           <FormItem className="flex w-full flex-col gap-2">
             <FormLabel>Columns</FormLabel>
