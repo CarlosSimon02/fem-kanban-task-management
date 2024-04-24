@@ -178,3 +178,14 @@ export const DragIcon = (props: SVGProps<SVGSVGElement>) => (
     </g>
   </svg>
 );
+
+export const CheckIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 10 8" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <path
+      stroke="#FFF"
+      strokeWidth="2"
+      fill="none"
+      d="m1.276 3.066 2.756 2.756 5-5"
+    />
+  </svg>
+);
