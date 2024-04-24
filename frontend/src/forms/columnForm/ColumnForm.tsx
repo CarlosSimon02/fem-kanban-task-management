@@ -25,12 +25,8 @@ type ColumnFormType = {
 type ColumnData = z.infer<typeof columnFormSchema>;
 
 const ColumnForm = ({ columnToEdit, afterSave }: ColumnFormType) => {
-  const updateColToCurrentBoard = useBoardStore(
-    (state) => state.updateColToCurrentBoard,
-  );
-  const addColToCurrentBoard = useBoardStore(
-    (state) => state.addColToCurrentBoard,
-  );
+  const updateCol = useBoardStore((state) => state.updateCol);
+  const addCol = useBoardStore((state) => state.addCol);
   const form = useForm<ColumnData>({
     resolver: zodResolver(columnFormSchema),
     defaultValues: columnToEdit || {
@@ -43,9 +39,9 @@ const ColumnForm = ({ columnToEdit, afterSave }: ColumnFormType) => {
 
   const onSave = (colData: ColumnData) => {
     if (columnToEdit) {
-      updateColToCurrentBoard(colData as unknown as ColumnType);
+      updateCol(colData as unknown as ColumnType);
     } else {
-      addColToCurrentBoard(colData as unknown as ColumnType);
+      addCol(colData as unknown as ColumnType);
     }
 
     afterSave && afterSave();
@@ -75,7 +71,7 @@ const ColumnForm = ({ columnToEdit, afterSave }: ColumnFormType) => {
           type="submit"
           className="clickable flex items-center justify-center rounded-full bg-accent p-2 text-sm font-bold text-accent-foreground hover:bg-accent-hover"
         >
-          {columnToEdit ? "Save Changes" : "Create New Board"}
+          {columnToEdit ? "Save Changes" : "Create New Column"}
         </button>
       </FormTag>
     </Form>
