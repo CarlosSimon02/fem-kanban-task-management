@@ -27,7 +27,7 @@ const TaskCard = ({ data, themeColor, index }: TaskCardProps) => {
               {...provided.draggableProps}
               {...provided.dragHandleProps}
             >
-              <div className="text-[0.9375rem] font-bold text-primary-foreground">
+              <div className="break-words text-[0.9375rem] font-bold text-primary-foreground">
                 {data.title}
               </div>
               <div className="mt-5 text-xs font-bold">
