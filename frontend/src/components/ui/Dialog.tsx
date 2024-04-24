@@ -46,6 +46,8 @@ const DialogContent = React.forwardRef<
         className,
       )}
       onOpenAutoFocus={(e) => e.preventDefault()}
+      onCloseAutoFocus={(e) => e.preventDefault()}
+      onInteractOutside={(e) => e.preventDefault()}
       {...props}
     >
       {children}
@@ -58,7 +60,10 @@ const DialogHeader = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("flex justify-between", className)} {...props} />
+  <div
+    className={cn("flex items-start justify-between gap-4", className)}
+    {...props}
+  />
 );
 DialogHeader.displayName = "DialogHeader";
 
@@ -82,10 +87,7 @@ const DialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn(
-      "text-lg font-bold leading-none text-primary-foreground",
-      className,
-    )}
+    className={cn("!text-lg font-bold text-primary-foreground", className)}
     {...props}
   />
 ));
