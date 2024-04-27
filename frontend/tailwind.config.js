@@ -77,10 +77,41 @@ export default {
           from: { "margin-left": "0" },
           to: { "margin-left": "-19.375rem" },
         },
+        "circle-bounce": {
+          "0%": {
+            top: "3.75rem",
+            height: "0.3125rem",
+            "border-radius": "3.125rem 3.125rem 1.5625rem 1.5625rem",
+            transform: "scaleX(1.7)",
+          },
+          "40%": {
+            height: "1.25rem",
+            "border-radius": "50%",
+            transform: "scaleX(1)",
+          },
+          "100%": {
+            top: "0%",
+          },
+        },
+        shadow: {
+          "0%": {
+            transform: "scaleX(1.5)",
+          },
+          "40%": {
+            transform: "scaleX(1)",
+            opacity: ".7",
+          },
+          "100%": {
+            transform: "scaleX(.2)",
+            opacity: ".4",
+          },
+        },
       },
       animation: {
         "sidebar-slide-in": "sidebar-slide-in 150ms ease-out",
         "sidebar-slide-out": "sidebar-slide-out 150ms ease-out",
+        "circle-bounce": "circle-bounce 500ms alternate infinite ease",
+        shadow: "shadow 500ms alternate infinite ease",
       },
       fontFamily: {
         plusJakartaSans: "'Plus Jakarta Sans', sans-serif",
