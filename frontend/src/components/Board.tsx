@@ -9,52 +9,44 @@ const Board = () => {
   const currentBoardIndex = useBoardStore((state) => state.currentBoardIndex);
   const updateBoard = useBoardStore((state) => state.updateBoard);
 
+  if (currentBoardIndex === null || currentBoardIndex === undefined) return;
+
   const dragEndHandler = (result: DropResult) => {
     const { destination, source, draggableId } = result;
 
-    if (!destination) {
-      return;
-    }
-
+    if (!destination) return;
     if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
-    ) {
+    )
       return;
-    }
 
-    if (currentBoardIndex !== null) {
-      const boardToUpdate = { ...boards[currentBoardIndex] };
-      const sourceColumnIndex = boardToUpdate.columns.findIndex(
-        (column) => column.id === source.droppableId,
-      );
-      const destinationColumnIndex = boardToUpdate.columns.findIndex(
-        (column) => column.id === destination.droppableId,
+    const boardToUpdate = { ...boards[currentBoardIndex] };
+    const sourceColumnIndex = boardToUpdate.columns.findIndex(
+      (column) => column.id === source.droppableId,
+    );
+    const destinationColumnIndex = boardToUpdate.columns.findIndex(
+      (column) => column.id === destination.droppableId,
+    );
+
+    if (sourceColumnIndex !== -1 && destinationColumnIndex !== -1) {
+      const draggedTask = boardToUpdate.columns[sourceColumnIndex].tasks.find(
+        (task) => task.id === draggableId,
       );
 
-      if (sourceColumnIndex !== -1 && destinationColumnIndex !== -1) {
-        const draggedTask = boardToUpdate.columns[sourceColumnIndex].tasks.find(
-          (task) => task.id === draggableId,
+      if (draggedTask) {
+        draggedTask.statusId = boardToUpdate.columns[destinationColumnIndex].id;
+
+        boardToUpdate.columns[sourceColumnIndex].tasks.splice(source.index, 1);
+
+        boardToUpdate.columns[destinationColumnIndex].tasks.splice(
+          destination.index,
+          0,
+          draggedTask,
         );
-
-        if (draggedTask) {
-          draggedTask.statusId =
-            boardToUpdate.columns[destinationColumnIndex].id;
-
-          boardToUpdate.columns[sourceColumnIndex].tasks.splice(
-            source.index,
-            1,
-          );
-
-          boardToUpdate.columns[destinationColumnIndex].tasks.splice(
-            destination.index,
-            0,
-            draggedTask,
-          );
-        }
-
-        updateBoard(boardToUpdate);
       }
+
+      updateBoard(boardToUpdate);
     }
   };
 
@@ -66,10 +58,9 @@ const Board = () => {
         ignoreElements={".card"}
         nativeMobileScroll={true}
       >
-        {currentBoardIndex !== null &&
-          boards[currentBoardIndex].columns.map((column, index) => (
-            <Column key={index} data={column} />
-          ))}
+        {boards[currentBoardIndex].columns.map((column, index) => (
+          <Column key={index} data={column} />
+        ))}
         <ColumnDialog>
           <button className="clickable mb-6 mt-12 min-h-80 w-[17.5rem] rounded-lg bg-new-column-bg text-2xl font-bold hover:text-accent">
             <span aria-hidden>+</span>New Column
