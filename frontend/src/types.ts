@@ -1,3 +1,10 @@
+export type Theme = "dark" | "light";
+
+export type BoardState = {
+  boards: BoardType[];
+  currentBoardIndex: number | null | undefined;
+};
+
 export type SubtaskType = {
   id: string;
   title: string;
