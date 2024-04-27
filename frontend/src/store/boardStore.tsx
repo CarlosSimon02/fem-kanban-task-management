@@ -1,17 +1,8 @@
-import { boards as JSONDataBoards } from "@/data/data.json";
-import { BoardType, ColumnType, TaskType } from "@/types";
-import { v4 as uuidv4 } from "uuid";
+import { BoardState, BoardType, ColumnType, TaskType } from "@/types";
 import { create } from "zustand";
 
-type BoardState = {
-  boards: BoardType[];
-  currentBoardIndex: number | null;
-};
-
 type BoardStore = BoardState & {
-  updateLocalStorage: (state: BoardState) => void;
-  initBoardState: () => void;
-  setCurrentBoardIndex: (index: number) => void;
+  setCurrentBoardIndex: (index: number | null | undefined) => void;
   setBoards: (boards: BoardType[]) => void;
   updateBoard: (boardToUpdate: BoardType) => void;
   addBoard: (boardToAdd: BoardType) => void;
@@ -45,59 +36,12 @@ const findTaskPosition = (currentBoard: BoardType, taskToUpdateId: string) => {
   return taskToUpdatePos;
 };
 
-const getJSONDataBoards = () => {
-  return JSONDataBoards.map((board) => ({
-    ...board,
-    id: uuidv4(),
-    columns: board.columns.map((column) => {
-      const columnId = uuidv4();
-
-      return {
-        ...column,
-        id: columnId,
-        tasks: column.tasks.map((task) => ({
-          id: uuidv4(),
-          title: task.title,
-          description: task.description,
-          statusId: columnId,
-          subtasks: task.subtasks.map((subtask) => ({
-            ...subtask,
-            id: uuidv4(),
-          })),
-        })),
-      };
-    }),
-  }));
-};
-
 export const useBoardStore = create<BoardStore>()((set) => ({
   boards: [],
   currentBoardIndex: null,
-  updateLocalStorage: (state) =>
-    localStorage.setItem("boardState", JSON.stringify(state)),
-  initBoardState: () =>
-    set((state) => {
-      const storedBoardState = localStorage.getItem("boardState");
-      let newState: BoardState;
-
-      if (storedBoardState) {
-        newState = JSON.parse(storedBoardState) as BoardState;
-      } else {
-        const boards = getJSONDataBoards();
-        newState = {
-          boards,
-          currentBoardIndex: boards.length ? 0 : null,
-        };
-      }
-
-      state.updateLocalStorage(newState);
-      return newState;
-    }),
   setCurrentBoardIndex: (index) =>
     set((state) => {
-      const newState = { boards: state.boards, currentBoardIndex: index };
-      state.updateLocalStorage(newState);
-      return newState;
+      return { boards: state.boards, currentBoardIndex: index };
     }),
   setBoards: (boards) => set({ boards }),
   updateBoard: (boardToUpdate) =>
@@ -110,23 +54,19 @@ export const useBoardStore = create<BoardStore>()((set) => ({
         newBoards[boardIndex] = boardToUpdate;
       }
 
-      const newState = {
+      return {
         boards: newBoards,
         currentBoardIndex: state.currentBoardIndex,
       };
-      state.updateLocalStorage(newState);
-      return newState;
     }),
   addBoard: (boardToAdd) =>
     set((state) => {
       const newBoards = [...state.boards, boardToAdd];
 
-      const newState = {
+      return {
         boards: newBoards,
         currentBoardIndex: newBoards.length - 1,
       };
-      state.updateLocalStorage(newState);
-      return newState;
     }),
   deleteBoard: (boardIdToDelete) =>
     set((state) => {
@@ -134,7 +74,11 @@ export const useBoardStore = create<BoardStore>()((set) => ({
         (board) => board.id !== boardIdToDelete,
       );
       let currentBoardIndex = state.currentBoardIndex;
-      if (state.currentBoardIndex !== null && newBoards.length) {
+      if (
+        state.currentBoardIndex !== null &&
+        state.currentBoardIndex !== undefined &&
+        newBoards.length
+      ) {
         currentBoardIndex = Math.min(
           state.currentBoardIndex,
           newBoards.length - 1,
@@ -143,44 +87,50 @@ export const useBoardStore = create<BoardStore>()((set) => ({
         currentBoardIndex = null;
       }
 
-      const newState = { boards: newBoards, currentBoardIndex };
-      state.updateLocalStorage(newState);
-      return newState;
+      return { boards: newBoards, currentBoardIndex };
     }),
   addCol: (colToAdd) =>
     set((state) => {
-      if (state.currentBoardIndex === null) return state;
+      if (
+        state.currentBoardIndex === null ||
+        state.currentBoardIndex === undefined
+      )
+        return state;
       const newBoards = [...state.boards];
       const currentBoard = newBoards[state.currentBoardIndex];
       const updatedColumns = [...currentBoard.columns, colToAdd];
       currentBoard.columns = updatedColumns;
 
-      const newState = {
+      return {
         boards: newBoards,
         currentBoardIndex: state.currentBoardIndex,
       };
-      state.updateLocalStorage(newState);
-      return newState;
     }),
   deleteCol: (colIdToDelete) =>
     set((state) => {
-      if (state.currentBoardIndex === null) return state;
+      if (
+        state.currentBoardIndex === null ||
+        state.currentBoardIndex === undefined
+      )
+        return state;
       const newBoards = [...state.boards];
       const currentBoard = newBoards[state.currentBoardIndex];
       currentBoard.columns = currentBoard.columns.filter(
         (col) => col.id !== colIdToDelete,
       );
 
-      const newState = {
+      return {
         boards: newBoards,
         currentBoardIndex: state.currentBoardIndex,
       };
-      state.updateLocalStorage(newState);
-      return newState;
     }),
   updateCol: (colToUpdate) =>
     set((state) => {
-      if (state.currentBoardIndex === null) return state;
+      if (
+        state.currentBoardIndex === null ||
+        state.currentBoardIndex === undefined
+      )
+        return state;
       const newBoards = [...state.boards];
       const currentBoard = newBoards[state.currentBoardIndex];
       const colIndex = currentBoard.columns.findIndex(
@@ -190,16 +140,18 @@ export const useBoardStore = create<BoardStore>()((set) => ({
         currentBoard.columns[colIndex] = colToUpdate;
       }
 
-      const newState = {
+      return {
         boards: newBoards,
         currentBoardIndex: state.currentBoardIndex,
       };
-      state.updateLocalStorage(newState);
-      return newState;
     }),
   addTask: (taskToAdd) =>
     set((state) => {
-      if (state.currentBoardIndex === null) return state;
+      if (
+        state.currentBoardIndex === null ||
+        state.currentBoardIndex === undefined
+      )
+        return state;
       const newBoards = [...state.boards];
       const currentBoard = newBoards[state.currentBoardIndex];
       const destColIndex = currentBoard.columns.findIndex(
@@ -207,16 +159,18 @@ export const useBoardStore = create<BoardStore>()((set) => ({
       );
       currentBoard.columns[destColIndex].tasks.push(taskToAdd);
 
-      const newState = {
+      return {
         boards: newBoards,
         currentBoardIndex: state.currentBoardIndex,
       };
-      state.updateLocalStorage(newState);
-      return newState;
     }),
   deleteTask: (taskIdToDelete) =>
     set((state) => {
-      if (state.currentBoardIndex === null) return state;
+      if (
+        state.currentBoardIndex === null ||
+        state.currentBoardIndex === undefined
+      )
+        return state;
       const newBoards = [...state.boards];
       const currentBoard = newBoards[state.currentBoardIndex];
       const taskPos = findTaskPosition(currentBoard, taskIdToDelete);
@@ -224,16 +178,18 @@ export const useBoardStore = create<BoardStore>()((set) => ({
         currentBoard.columns[taskPos.col].tasks.splice(taskPos.row, 1);
       }
 
-      const newState = {
+      return {
         boards: newBoards,
         currentBoardIndex: state.currentBoardIndex,
       };
-      state.updateLocalStorage(newState);
-      return newState;
     }),
   updateTask: (taskToUpdate) =>
     set((state) => {
-      if (state.currentBoardIndex === null) return state;
+      if (
+        state.currentBoardIndex === null ||
+        state.currentBoardIndex === undefined
+      )
+        return state;
       const newBoards = [...state.boards];
       const currentBoard = newBoards[state.currentBoardIndex];
       const taskPos = findTaskPosition(currentBoard, taskToUpdate.id);
@@ -249,11 +205,9 @@ export const useBoardStore = create<BoardStore>()((set) => ({
         }
       }
 
-      const newState = {
+      return {
         boards: newBoards,
         currentBoardIndex: state.currentBoardIndex,
       };
-      state.updateLocalStorage(newState);
-      return newState;
     }),
 }));
