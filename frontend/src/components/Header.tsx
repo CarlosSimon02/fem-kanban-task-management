@@ -12,6 +12,8 @@ const Header = () => {
   const { isAuthenticated } = useAuth0();
   const currentBoardIndex = useBoardStore((state) => state.currentBoardIndex);
   const boards = useBoardStore((state) => state.boards);
+  const currentBoardIndexIsNumber =
+    currentBoardIndex !== null && currentBoardIndex !== undefined;
 
   return (
     <header className="z-10 flex overflow-hidden bg-primary md:border-b-[0.0625rem]">
@@ -20,7 +22,7 @@ const Header = () => {
       </div>
       <div className="flex min-w-0 flex-1 items-center justify-between gap-8 py-4 pr-4 md:px-6 lg:px-8">
         <BoardsDropdown />
-        {currentBoardIndex !== null && (
+        {currentBoardIndexIsNumber && (
           <div className="flex flex-shrink-0 gap-1">
             <TaskFormDialog>
               <button className="clickable rounded-full bg-accent px-[1.125rem] py-[0.625rem] text-accent-foreground hover:bg-accent-hover md:px-6 md:py-[0.9375rem] lg:px-6 lg:py-[0.9375rem]">
