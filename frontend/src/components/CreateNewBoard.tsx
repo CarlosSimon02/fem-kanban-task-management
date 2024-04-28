@@ -9,7 +9,7 @@ type CreateNewBoardProps = {
 const CreateNewBoard = ({ className }: CreateNewBoardProps) => {
   return (
     <div className="pr-6">
-      <BoardDialog >
+      <BoardDialog>
         <button
           className={cn(
             "clickable group mt-[0.125rem] flex w-full items-center gap-3 rounded-r-3xl px-6 py-[0.875rem] text-[0.9375rem] font-bold text-accent hover:text-accent-hover lg:px-8",
