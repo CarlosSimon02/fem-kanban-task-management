@@ -14,6 +14,8 @@ const BoardsDropdown = () => {
   const currentBoardIndex = useBoardStore((state) => state.currentBoardIndex);
   const shouldRenderChild = useDelayUnmount(isOpen, 140);
   const rootElement = document.querySelector("#root");
+  const currentBoardIndexIsNumber =
+    currentBoardIndex !== null && currentBoardIndex !== undefined;
 
   return (
     <>
@@ -21,12 +23,12 @@ const BoardsDropdown = () => {
         className={cn(
           "text-left text-xl font-bold max-md:hidden lg:text-2xl",
           "min-w-0 max-w-[30ch] flex-shrink overflow-hidden text-ellipsis whitespace-nowrap",
-          currentBoardIndex !== null
+          currentBoardIndexIsNumber
             ? "text-primary-foreground"
             : "text-secondary-foreground",
         )}
       >
-        {currentBoardIndex !== null
+        {currentBoardIndexIsNumber
           ? boards[currentBoardIndex].name
           : "No Boards Found"}
       </div>
@@ -42,7 +44,7 @@ const BoardsDropdown = () => {
         <DropdownMenu.Trigger asChild>
           <button className="flex min-w-[0] cursor-pointer items-center gap-1 text-left text-lg font-bold text-primary-foreground md:hidden [&_>_*]:transition-transform">
             <span className="max-w-[20ch] overflow-hidden text-ellipsis whitespace-nowrap">
-              {currentBoardIndex !== null
+              {currentBoardIndexIsNumber
                 ? boards[currentBoardIndex].name
                 : "No Boards Found"}
             </span>
