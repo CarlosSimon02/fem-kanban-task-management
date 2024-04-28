@@ -27,16 +27,13 @@ const useBoardsControl = () => {
   const dragEndHandler = (result: DropResult) => {
     const { destination, source, draggableId } = result;
 
-    if (!destination) {
-      return;
-    }
+    if (!destination) return;
 
     if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
-    ) {
+    )
       return;
-    }
 
     const newBoards = [...boards];
     const draggedBoard = boards.find((board) => board.id === draggableId);
@@ -44,7 +41,7 @@ const useBoardsControl = () => {
     newBoards.splice(source.index, 1);
     draggedBoard && newBoards.splice(destination.index, 0, draggedBoard);
 
-    if (currentBoardIndex !== null) {
+    if (currentBoardIndex !== null && currentBoardIndex !== undefined) {
       const currentBoardId = boards[currentBoardIndex].id;
 
       setBoards(newBoards);
@@ -76,7 +73,7 @@ export const BoardsControlSidebar = () => {
             {(provided, snapshot) => (
               <RadioGroup.Root
                 value={
-                  currentBoardIndex !== null
+                  currentBoardIndex !== null && currentBoardIndex !== undefined
                     ? boards[currentBoardIndex].id
                     : undefined
                 }
@@ -141,7 +138,7 @@ export const BoardsControlDropdown = () => {
             <DropdownMenu.RadioGroup
               ref={provided.innerRef}
               value={
-                currentBoardIndex !== null
+                currentBoardIndex !== null && currentBoardIndex !== undefined
                   ? boards[currentBoardIndex].id
                   : undefined
               }
