@@ -104,6 +104,6 @@
 
 @layer components {
   .clickable {
-    @apply transition-colors disabled:pointer-events-none disabled:opacity-50 [&_g]:transition-colors [&_path]:transition-colors;
+    @apply transition-colors disabled:pointer-events-none disabled:opacity-50 [&_g]:transition-colors [&_path]:transition-colors [&_polyline]:transition-colors;
   }
 }
