@@ -11,4 +11,11 @@ router.get(
   MyCurrentBoardIndexController.getCurrentBoardIndex
 );
 
+router.patch(
+  "/",
+  jwtCheck,
+  jwtParse,
+  MyCurrentBoardIndexController.setCurrentBoardIndex
+);
+
 export default router;
