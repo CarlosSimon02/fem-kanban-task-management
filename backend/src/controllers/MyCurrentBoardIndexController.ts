@@ -15,6 +15,26 @@ const getCurrentBoardIndex = async (req: Request, res: Response) => {
   }
 };
 
+const setCurrentBoardIndex = async (req: Request, res: Response) => {
+  try {
+    const { currentBoardIndex } = req.body;
+    const user = await User.findById(req.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.currentBoardIndex = currentBoardIndex;
+    await user.save();
+
+    res.status(200).json({ currentBoardIndex });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error setting current board index" });
+  }
+};
+
 export default {
   getCurrentBoardIndex,
+  setCurrentBoardIndex,
 };
