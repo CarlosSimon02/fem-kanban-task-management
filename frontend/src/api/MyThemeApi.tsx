@@ -2,6 +2,7 @@ import { useThemeStore } from "@/store/themeStore";
 import { Theme } from "@/types";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useMutation } from "react-query";
+import { toast } from "sonner";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -25,7 +26,17 @@ export const useGetMyTheme = () => {
     return response.json();
   };
 
-  const { mutateAsync: getTheme, isLoading } = useMutation(getMyTheme);
+  const {
+    mutateAsync: getTheme,
+    isLoading,
+    error,
+    reset,
+  } = useMutation(getMyTheme);
+
+  if (error) {
+    toast.error(error.toString());
+    reset();
+  }
 
   return {
     getTheme,
@@ -44,7 +55,7 @@ export const useSetMyTheme = () => {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ theme: theme }),
+      body: JSON.stringify({ theme }),
     });
 
     if (!response.ok) {
@@ -54,18 +65,33 @@ export const useSetMyTheme = () => {
     return response.json();
   };
 
-  const { mutateAsync: setApiTheme, isLoading } = useMutation(setMyApiTheme);
-  const { setTheme: setStoreTheme } = useThemeStore();
-  const setTheme = async (newTheme: Theme) => {
+  const {
+    mutateAsync: setApiTheme,
+    isLoading,
+    error,
+    reset,
+  } = useMutation(setMyApiTheme);
+  const setStoreTheme = useThemeStore((state) => state.setTheme);
+  const setTheme = async (theme: Theme) => {
     if (isLoading) return;
     if (isAuthenticated) {
-      if (!navigator.onLine) return;
-      const { theme } = await setApiTheme(newTheme);
-      setStoreTheme(theme);
+      if (!navigator.onLine) {
+        toast.error(
+          "Error: Unable to establish internet connection. Please check your network settings and try again",
+        );
+        return;
+      }
+      const { theme: themeApi } = await setApiTheme(theme);
+      setStoreTheme(themeApi);
     } else {
-      setStoreTheme(newTheme);
+      setStoreTheme(theme);
     }
   };
+
+  if (error) {
+    toast.error(error.toString());
+    reset();
+  }
 
   return {
     setTheme,
