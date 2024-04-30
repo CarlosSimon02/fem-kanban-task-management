@@ -1,3 +1,4 @@
+import { useAddMyTask, useUpdateMyTask } from "@/api/MyTaskApi";
 import StatusDropdown from "@/components/StatusDropdown";
 import {
   Form,
@@ -10,7 +11,6 @@ import {
 } from "@/components/ui/Form";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
-import { useBoardStore } from "@/store/boardStore";
 import { TaskType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -27,8 +27,8 @@ type TaskFormType = {
 type TaskData = z.infer<typeof taskFormSchema>;
 
 const TaskForm = ({ taskToEdit, afterSave }: TaskFormType) => {
-  const updateTask = useBoardStore((state) => state.updateTask);
-  const addTask = useBoardStore((state) => state.addTask);
+  const { updateTask } = useUpdateMyTask();
+  const { addTask } = useAddMyTask();
   const form = useForm<TaskData>({
     resolver: zodResolver(taskFormSchema),
     defaultValues: taskToEdit || {
