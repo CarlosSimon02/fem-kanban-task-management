@@ -1,3 +1,4 @@
+import { useUpdateMyTask } from "@/api/MyTaskApi";
 import {
   Dialog,
   DialogClose,
@@ -9,7 +10,6 @@ import {
 } from "@/components/ui/Dialog";
 import { useDialog } from "@/hooks/useDialog";
 import { cn } from "@/lib/utils";
-import { useBoardStore } from "@/store/boardStore";
 import { TaskType } from "@/types";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useState } from "react";
@@ -33,7 +33,7 @@ const TaskDialog = ({
   const [defaultOpen, setDefaultOpen] = useState(false);
   const taskFormDialog = useDialog<HTMLDivElement>();
   const deleteTaskAlertDialog = useDialog<HTMLDivElement>();
-  const updateTask = useBoardStore((state) => state.updateTask);
+  const { updateTask } = useUpdateMyTask();
   const completedSubtasksCount = task.subtasks.filter(
     ({ isCompleted }) => isCompleted,
   ).length;
