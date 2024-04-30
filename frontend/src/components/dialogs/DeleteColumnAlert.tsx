@@ -1,4 +1,4 @@
-import { useBoardStore } from "@/store/boardStore";
+import { useDeleteMyCol } from "@/api/MyColumnApi";
 import { ColumnType } from "@/types";
 import { useState } from "react";
 import {
@@ -26,7 +26,7 @@ const DeleteColumnAlert = ({
   onOpenChange,
 }: DeleteColumnAlertProps) => {
   const [defaultOpen, setDefaultOpen] = useState(false);
-  const deleteCol = useBoardStore((state) => state.deleteCol);
+  const { deleteCol } = useDeleteMyCol();
 
   return (
     <AlertDialog
