@@ -1,3 +1,4 @@
+import { useAddMyBoard, useUpdateMyBoard } from "@/api/MyBoardsApi";
 import {
   Form,
   FormControl,
@@ -8,7 +9,6 @@ import {
   FormTag,
 } from "@/components/ui/Form";
 import { Input } from "@/components/ui/Input";
-import { useBoardStore } from "@/store/boardStore";
 import { BoardType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -25,8 +25,8 @@ type BoardFormType = {
 type BoardData = z.infer<typeof boardFormSchema>;
 
 const BoardForm = ({ boardToEdit, afterSave }: BoardFormType) => {
-  const updateBoard = useBoardStore((state) => state.updateBoard);
-  const addBoard = useBoardStore((state) => state.addBoard);
+  const { updateBoard } = useUpdateMyBoard();
+  const { addBoard } = useAddMyBoard();
   const form = useForm<BoardData>({
     resolver: zodResolver(boardFormSchema),
     defaultValues: boardToEdit || {
