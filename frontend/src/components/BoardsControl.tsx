@@ -1,3 +1,5 @@
+import { useSetMyBoards } from "@/api/MyBoardsApi";
+import { useSetMyCurrentBoardIndex } from "@/api/MyCurrentBoardIndexApi";
 import { cn } from "@/lib/utils";
 import { useBoardStore } from "@/store/boardStore";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
@@ -16,10 +18,8 @@ import { DragIcon } from "./ui/Icons";
 const useBoardsControl = () => {
   const boards = useBoardStore((state) => state.boards);
   const currentBoardIndex = useBoardStore((state) => state.currentBoardIndex);
-  const setCurrentBoardIndex = useBoardStore(
-    (state) => state.setCurrentBoardIndex,
-  );
-  const setBoards = useBoardStore((state) => state.setBoards);
+  const { setCurrentBoardIndex } = useSetMyCurrentBoardIndex();
+  const { setBoards } = useSetMyBoards();
   const valueChangeHandler = (value: string) => {
     setCurrentBoardIndex(boards.findIndex((board) => board.id === value));
   };
