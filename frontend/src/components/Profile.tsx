@@ -33,7 +33,13 @@ const Profile = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem
-          onSelect={() => logout()}
+          onSelect={() =>
+            logout({
+              logoutParams: {
+                returnTo: import.meta.env.VITE_AUTH0_CALLBACK_URL,
+              },
+            })
+          }
           className="text-destructive focus:text-destructive"
         >
           Log Out
