@@ -1,4 +1,6 @@
+import { useUpdateMyBoard } from "@/api/MyBoardsApi";
 import { useBoardStore } from "@/store/boardStore";
+import { BoardType } from "@/types";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import ScrollContainer from "react-indiana-drag-scroll";
 import Column from "./Column";
@@ -7,13 +9,12 @@ import ColumnDialog from "./dialogs/ColumnDialog";
 const Board = () => {
   const boards = useBoardStore((state) => state.boards);
   const currentBoardIndex = useBoardStore((state) => state.currentBoardIndex);
-  const updateBoard = useBoardStore((state) => state.updateBoard);
+  const { updateBoard } = useUpdateMyBoard();
 
   if (currentBoardIndex === null || currentBoardIndex === undefined) return;
 
   const dragEndHandler = (result: DropResult) => {
     const { destination, source, draggableId } = result;
-
     if (!destination) return;
     if (
       destination.droppableId === source.droppableId &&
@@ -21,31 +22,29 @@ const Board = () => {
     )
       return;
 
-    const boardToUpdate = { ...boards[currentBoardIndex] };
+    // deep copy
+    const boardToUpdate: BoardType = JSON.parse(
+      JSON.stringify(boards[currentBoardIndex]),
+    );
     const sourceColumnIndex = boardToUpdate.columns.findIndex(
       (column) => column.id === source.droppableId,
     );
     const destinationColumnIndex = boardToUpdate.columns.findIndex(
       (column) => column.id === destination.droppableId,
     );
-
     if (sourceColumnIndex !== -1 && destinationColumnIndex !== -1) {
       const draggedTask = boardToUpdate.columns[sourceColumnIndex].tasks.find(
         (task) => task.id === draggableId,
       );
-
       if (draggedTask) {
         draggedTask.statusId = boardToUpdate.columns[destinationColumnIndex].id;
-
         boardToUpdate.columns[sourceColumnIndex].tasks.splice(source.index, 1);
-
         boardToUpdate.columns[destinationColumnIndex].tasks.splice(
           destination.index,
           0,
           draggedTask,
         );
       }
-
       updateBoard(boardToUpdate);
     }
   };
