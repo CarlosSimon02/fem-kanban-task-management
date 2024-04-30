@@ -27,7 +27,8 @@ const StatusDropdown = ({
   const currentBoardIndex = useBoardStore((state) => state.currentBoardIndex);
   const columnDialog = useDialog<HTMLDivElement>();
 
-  if (currentBoardIndex === null) return null;
+  if (currentBoardIndex === null || currentBoardIndex === undefined)
+    return null;
   const currentBoard = boards[currentBoardIndex];
   const currentStatusName = currentStatusId
     ? boards[currentBoardIndex].columns.find(
