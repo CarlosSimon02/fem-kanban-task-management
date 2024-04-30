@@ -1,4 +1,4 @@
-import { useBoardStore } from "@/store/boardStore";
+import { useDeleteMyTask } from "@/api/MyTaskApi";
 import { TaskType } from "@/types";
 import { useState } from "react";
 import {
@@ -26,7 +26,7 @@ const DeleteBoardAlert = ({
   onOpenChange,
 }: DeleteBoardAlertProps) => {
   const [defaultOpen, setDefaultOpen] = useState(false);
-  const deleteTask = useBoardStore((state) => state.deleteTask);
+  const { deleteTask } = useDeleteMyTask();
 
   return (
     <AlertDialog
