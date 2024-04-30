@@ -1,3 +1,4 @@
+import { useAddMyCol, useUpdateMyCol } from "@/api/MyColumnApi";
 import {
   Form,
   FormControl,
@@ -8,7 +9,6 @@ import {
 } from "@/components/ui/Form";
 import { Input } from "@/components/ui/Input";
 import { getRandomColor } from "@/lib/utils";
-import { useBoardStore } from "@/store/boardStore";
 import { ColumnType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -25,8 +25,8 @@ type ColumnFormType = {
 type ColumnData = z.infer<typeof columnFormSchema>;
 
 const ColumnForm = ({ columnToEdit, afterSave }: ColumnFormType) => {
-  const updateCol = useBoardStore((state) => state.updateCol);
-  const addCol = useBoardStore((state) => state.addCol);
+  const { updateCol } = useUpdateMyCol();
+  const { addCol } = useAddMyCol();
   const form = useForm<ColumnData>({
     resolver: zodResolver(columnFormSchema),
     defaultValues: columnToEdit || {
