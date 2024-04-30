@@ -103,11 +103,11 @@ const LoadDataProvider = ({ children }: LoadDataProviderProps) => {
 
     loadData();
   }, [
-    // getBoards,
-    // getCurrentBoardIndex,
+    getBoards,
+    getCurrentBoardIndex,
     isAuthenticated,
-    // setStoreBoards,
-    // setStoreCurrentBoardIndex,
+    setStoreBoards,
+    setStoreCurrentBoardIndex,
   ]);
 
   if (isThemeLoading || isBoardsLoading) return <LoadingPage />;
