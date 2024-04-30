@@ -27,7 +27,7 @@ const Profile = () => {
             </AvatarFallback>
           </Avatar>
           <span className="overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold text-primary-foreground max-md:hidden">
-            {user.given_name}
+            {user.given_name || user.email?.split("@")[0]}
           </span>
         </button>
       </DropdownMenuTrigger>
