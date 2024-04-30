@@ -1,4 +1,4 @@
-import { useBoardStore } from "@/store/boardStore";
+import { useDeleteMyBoard } from "@/api/MyBoardsApi";
 import { BoardType } from "@/types";
 import { useState } from "react";
 import {
@@ -26,7 +26,7 @@ const DeleteBoardAlert = ({
   onOpenChange,
 }: DeleteBoardAlertProps) => {
   const [defaultOpen, setDefaultOpen] = useState(false);
-  const deleteBoard = useBoardStore((state) => state.deleteBoard);
+  const { deleteBoard } = useDeleteMyBoard();
 
   return (
     <AlertDialog
