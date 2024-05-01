@@ -120,7 +120,6 @@ const LoadDataProvider = ({ children }: LoadDataProviderProps) => {
       await loadTheme();
       await loadData();
 
-      console.log(isAuthenticated, " authenticated");
       hasLoaded.current = true;
     };
 
