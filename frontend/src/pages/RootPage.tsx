@@ -4,16 +4,28 @@ import Sidebar from "@/components/Sidebar";
 import BoardDialog from "@/components/dialogs/BoardDialog";
 import { EmptyBoardIcon } from "@/components/ui/Icons";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect } from "react";
+import { toast } from "sonner";
 import { useBoardStore } from "../store/boardStore";
-import LoadingPage from "./LoadingPage";
 
 const RootPage = () => {
-  const { isLoading } = useAuth0();
+  const { isAuthenticated } = useAuth0();
   const currentBoardIndex = useBoardStore((state) => state.currentBoardIndex);
   const currentBoardIndexIsNumber =
     currentBoardIndex !== null && currentBoardIndex !== undefined;
 
-  if (isLoading) return <LoadingPage />;
+  useEffect(() => {
+    if (isAuthenticated) {
+      toast("HI THERE!!", {
+        description: "You're now logged in and ready to access all features.",
+      });
+    } else {
+      toast("HI THERE!!", {
+        description:
+          "This web app utilizes 'localStorage' to store your data. Please log in to access your data across devices.",
+      });
+    }
+  }, [isAuthenticated]);
 
   return (
     <>
