@@ -34,6 +34,9 @@ export const useUpdateMyCol = () => {
     reset,
   } = useMutation(updateMyCol);
   const updateStoreCol = useBoardStore((state) => state.updateCol);
+  const updateBoardLocalStorage = useBoardStore(
+    (state) => state.updateLocalStorage,
+  );
   const updateCol = async (colToUpdate: ColumnType) => {
     if (isLoading) return;
     if (isAuthenticated) {
@@ -47,6 +50,7 @@ export const useUpdateMyCol = () => {
       updateStoreCol(colToUpdateApi);
     } else {
       updateStoreCol(colToUpdate);
+      updateBoardLocalStorage();
     }
   };
 
@@ -88,6 +92,9 @@ export const useAddMyCol = () => {
     reset,
   } = useMutation(addMyCol);
   const addStoreCol = useBoardStore((state) => state.addCol);
+  const updateBoardLocalStorage = useBoardStore(
+    (state) => state.updateLocalStorage,
+  );
   const addCol = async (colToAdd: ColumnType) => {
     if (isLoading) return;
     if (isAuthenticated) {
@@ -101,6 +108,7 @@ export const useAddMyCol = () => {
       addStoreCol(colToAddApi);
     } else {
       addStoreCol(colToAdd);
+      updateBoardLocalStorage();
     }
   };
 
@@ -142,6 +150,9 @@ export const useDeleteMyCol = () => {
     reset,
   } = useMutation(deleteMyCol);
   const deleteStoreCol = useBoardStore((state) => state.deleteCol);
+  const updateBoardLocalStorage = useBoardStore(
+    (state) => state.updateLocalStorage,
+  );
   const deleteCol = async (colIdToDelete: string) => {
     if (isLoading) return;
     if (isAuthenticated) {
@@ -156,6 +167,7 @@ export const useDeleteMyCol = () => {
       deleteStoreCol(colIdToDeleteApi);
     } else {
       deleteStoreCol(colIdToDelete);
+      updateBoardLocalStorage();
     }
   };
 
