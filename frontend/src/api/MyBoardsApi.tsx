@@ -63,6 +63,9 @@ export const useSetMyBoards = () => {
   } = useMutation(setMyBoards);
   const storeBoards = useBoardStore((state) => state.boards);
   const setStoreBoards = useBoardStore((state) => state.setBoards);
+  const updateBoardLocalStorage = useBoardStore(
+    (state) => state.updateLocalStorage,
+  );
   const setBoards = async (boards: BoardType[]) => {
     if (isLoading) return;
     if (isAuthenticated) {
@@ -81,6 +84,7 @@ export const useSetMyBoards = () => {
       }
     } else {
       setStoreBoards(boards);
+      updateBoardLocalStorage();
     }
   };
 
@@ -123,6 +127,9 @@ export const useUpdateMyBoard = () => {
   } = useMutation(updateMyBoard);
   const storeBoards = useBoardStore((state) => state.boards);
   const updateStoreBoard = useBoardStore((state) => state.updateBoard);
+  const updateBoardLocalStorage = useBoardStore(
+    (state) => state.updateLocalStorage,
+  );
   const updateBoard = async (boardToUpdate: BoardType) => {
     if (isLoading) return;
     if (isAuthenticated) {
@@ -145,6 +152,7 @@ export const useUpdateMyBoard = () => {
       }
     } else {
       updateStoreBoard(boardToUpdate);
+      updateBoardLocalStorage();
     }
   };
 
@@ -186,6 +194,9 @@ export const useAddMyBoard = () => {
     reset,
   } = useMutation(addMyBoard);
   const addStoreBoard = useBoardStore((state) => state.addBoard);
+  const updateBoardLocalStorage = useBoardStore(
+    (state) => state.updateLocalStorage,
+  );
   const addBoard = async (boardToAdd: BoardType) => {
     if (isLoading) return;
     if (isAuthenticated) {
@@ -199,6 +210,7 @@ export const useAddMyBoard = () => {
       addStoreBoard(boardToAddApi);
     } else {
       addStoreBoard(boardToAdd);
+      updateBoardLocalStorage();
     }
   };
 
@@ -240,6 +252,9 @@ export const useDeleteMyBoard = () => {
     reset,
   } = useMutation(deleteMyBoard);
   const deleteStoreBoard = useBoardStore((state) => state.deleteBoard);
+  const updateBoardLocalStorage = useBoardStore(
+    (state) => state.updateLocalStorage,
+  );
   const deleteBoard = async (boardIdToDelete: string) => {
     if (isLoading) return;
     if (isAuthenticated) {
@@ -254,6 +269,7 @@ export const useDeleteMyBoard = () => {
       deleteStoreBoard(boardIdToDeleteApi);
     } else {
       deleteStoreBoard(boardIdToDelete);
+      updateBoardLocalStorage();
     }
   };
 
