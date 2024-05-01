@@ -70,6 +70,9 @@ export const useSetMyCurrentBoardIndex = () => {
   const setStoreCurrentBoardIndex = useBoardStore(
     (state) => state.setCurrentBoardIndex,
   );
+  const updateBoardLocalStorage = useBoardStore(
+    (state) => state.updateLocalStorage,
+  );
   const setCurrentBoardIndex = async (
     currentBoardIndex: number | null | undefined,
   ) => {
@@ -90,6 +93,7 @@ export const useSetMyCurrentBoardIndex = () => {
       }
     } else {
       setStoreCurrentBoardIndex(currentBoardIndex);
+      updateBoardLocalStorage();
     }
   };
 
