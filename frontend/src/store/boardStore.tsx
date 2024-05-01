@@ -2,6 +2,7 @@ import { BoardState, BoardType, ColumnType, TaskType } from "@/types";
 import { create } from "zustand";
 
 type BoardStore = BoardState & {
+  updateLocalStorage: () => void;
   setCurrentBoardIndex: (index: number | null | undefined) => void;
   setBoards: (boards: BoardType[]) => void;
   updateBoard: (boardToUpdate: BoardType) => void;
@@ -36,9 +37,18 @@ const findTaskPosition = (currentBoard: BoardType, taskToUpdateId: string) => {
   return taskToUpdatePos;
 };
 
-export const useBoardStore = create<BoardStore>()((set) => ({
+export const useBoardStore = create<BoardStore>()((set, get) => ({
   boards: [],
   currentBoardIndex: null,
+  updateLocalStorage: () => {
+    localStorage.setItem(
+      "board-state",
+      JSON.stringify({
+        boards: get().boards,
+        currentBoardIndex: get().currentBoardIndex,
+      }),
+    );
+  },
   setCurrentBoardIndex: (index) =>
     set((state) => {
       return { boards: state.boards, currentBoardIndex: index };
