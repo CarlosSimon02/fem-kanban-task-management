@@ -13,13 +13,14 @@ const AuthCallbackPage = () => {
   useEffect(() => {
     if (
       user?.sub &&
-      user?.given_name &&
+      (user?.given_name || user?.email) &&
       user?.picture &&
       !hasCreatedUser.current
     ) {
       createUser({
         auth0Id: user.sub,
-        name: user.given_name,
+        name:
+          user.given_name || (user.email ? user.email.split("@")[0] : "User"),
         picture: user.picture,
       });
       hasCreatedUser.current = true;
