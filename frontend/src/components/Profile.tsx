@@ -27,7 +27,8 @@ const Profile = () => {
             </AvatarFallback>
           </Avatar>
           <span className="overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold text-primary-foreground max-md:hidden">
-            {user.given_name || user.email?.split("@")[0]}
+            {user.given_name ||
+              (user.email ? user.email.split("@")[0] : "User")}
           </span>
         </button>
       </DropdownMenuTrigger>
