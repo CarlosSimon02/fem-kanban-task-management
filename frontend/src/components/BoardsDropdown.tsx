@@ -43,7 +43,14 @@ const BoardsDropdown = () => {
       <DropdownMenu.Root onOpenChange={(open: boolean) => setIsOpen(open)}>
         <DropdownMenu.Trigger asChild>
           <button className="flex min-w-[0] cursor-pointer items-center gap-1 text-left text-lg font-bold text-primary-foreground md:hidden [&_>_*]:transition-transform">
-            <span className="max-w-[20ch] overflow-hidden text-ellipsis whitespace-nowrap">
+            <span
+              className={cn(
+                "max-w-[20ch] overflow-hidden text-ellipsis whitespace-nowrap",
+                currentBoardIndexIsNumber
+                  ? "text-primary-foreground"
+                  : "text-secondary-foreground",
+              )}
+            >
               {currentBoardIndexIsNumber
                 ? boards[currentBoardIndex].name
                 : "No Boards Found"}

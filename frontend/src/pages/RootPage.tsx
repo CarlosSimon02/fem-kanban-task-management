@@ -37,7 +37,7 @@ const RootPage = () => {
         ) : (
           <div className="flex h-full flex-1 items-center justify-center">
             <BoardDialog>
-              <button className="clickable group flex flex-col items-center gap-5 font-bold text-secondary-foreground hover:text-accent">
+              <button className="clickable group flex flex-col items-center gap-5 font-bold text-secondary-foreground opacity-50 hover:text-accent">
                 <EmptyBoardIcon className="[&_path]: h-32 w-32" />
                 <div>
                   <span aria-hidden={true}>+</span> Create New Board
