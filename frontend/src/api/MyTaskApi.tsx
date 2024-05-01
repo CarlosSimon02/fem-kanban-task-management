@@ -34,6 +34,9 @@ export const useUpdateMyTask = () => {
     reset,
   } = useMutation(updateMyTask);
   const updateStoreTask = useBoardStore((state) => state.updateTask);
+  const updateBoardLocalStorage = useBoardStore(
+    (state) => state.updateLocalStorage,
+  );
   const updateTask = async (taskToUpdate: TaskType) => {
     if (isLoading) return;
     if (isAuthenticated) {
@@ -48,6 +51,7 @@ export const useUpdateMyTask = () => {
       updateStoreTask(taskToUpdateApi);
     } else {
       updateStoreTask(taskToUpdate);
+      updateBoardLocalStorage();
     }
   };
 
@@ -89,6 +93,9 @@ export const useAddMyTask = () => {
     reset,
   } = useMutation(addMyTask);
   const addStoreTask = useBoardStore((state) => state.addTask);
+  const updateBoardLocalStorage = useBoardStore(
+    (state) => state.updateLocalStorage,
+  );
   const addTask = async (taskToAdd: TaskType) => {
     if (isLoading) return;
     if (isAuthenticated) {
@@ -102,6 +109,7 @@ export const useAddMyTask = () => {
       addStoreTask(taskToAddApi);
     } else {
       addStoreTask(taskToAdd);
+      updateBoardLocalStorage();
     }
   };
 
@@ -143,6 +151,9 @@ export const useDeleteMyTask = () => {
     reset,
   } = useMutation(deleteMyTask);
   const deleteStoreTask = useBoardStore((state) => state.deleteTask);
+  const updateBoardLocalStorage = useBoardStore(
+    (state) => state.updateLocalStorage,
+  );
   const deleteTask = async (taskIdToDelete: string) => {
     if (isLoading) return;
     if (isAuthenticated) {
@@ -157,6 +168,7 @@ export const useDeleteMyTask = () => {
       deleteStoreTask(taskIdToDeleteApi);
     } else {
       deleteStoreTask(taskIdToDelete);
+      updateBoardLocalStorage();
     }
   };
 
