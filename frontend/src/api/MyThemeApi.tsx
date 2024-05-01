@@ -72,6 +72,9 @@ export const useSetMyTheme = () => {
     reset,
   } = useMutation(setMyApiTheme);
   const setStoreTheme = useThemeStore((state) => state.setTheme);
+  const updateThemeLocalStorage = useThemeStore(
+    (state) => state.updateLocalStorage,
+  );
   const setTheme = async (theme: Theme) => {
     if (isLoading) return;
     if (isAuthenticated) {
@@ -85,6 +88,7 @@ export const useSetMyTheme = () => {
       setStoreTheme(themeApi);
     } else {
       setStoreTheme(theme);
+      updateThemeLocalStorage();
     }
   };
 
