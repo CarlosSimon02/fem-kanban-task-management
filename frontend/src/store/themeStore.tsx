@@ -9,12 +9,16 @@ const setRootElementTheme = (theme: Theme) => {
 
 type ThemeStore = {
   theme: Theme;
+  updateLocalStorage: () => void;
   setTheme: (theme: Theme) => void;
 };
 
-export const useThemeStore = create<ThemeStore>((set) => {
+export const useThemeStore = create<ThemeStore>((set, get) => {
   return {
     theme: "light",
+    updateLocalStorage: () => {
+      localStorage.setItem("vite-ui-theme", get().theme);
+    },
     setTheme: (theme: Theme) => {
       set({ theme });
       setRootElementTheme(theme);
