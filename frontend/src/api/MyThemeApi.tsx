@@ -29,6 +29,7 @@ export const useGetMyTheme = () => {
   const {
     mutateAsync: getTheme,
     isLoading,
+    isError,
     error,
     reset,
   } = useMutation(getMyTheme);
@@ -41,6 +42,7 @@ export const useGetMyTheme = () => {
   return {
     getTheme,
     isLoading,
+    isError,
   };
 };
 

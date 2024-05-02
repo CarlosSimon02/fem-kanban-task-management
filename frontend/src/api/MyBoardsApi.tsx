@@ -26,11 +26,16 @@ export const useGetMyBoards = () => {
     return response.json();
   };
 
-  const { mutateAsync: getBoards, isLoading } = useMutation(getMyBoards);
+  const {
+    mutateAsync: getBoards,
+    isLoading,
+    isError,
+  } = useMutation(getMyBoards);
 
   return {
     getBoards,
     isLoading,
+    isError,
   };
 };
 
