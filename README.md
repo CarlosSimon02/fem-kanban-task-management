@@ -1,21 +1,21 @@
-# 🧠Frontend Mentor - Kanban task management web app solution
+# Frontend Mentor - Kanban task management web app solution
 
 This is a solution to the [Kanban task management web app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/kanban-task-management-web-app-wgQLt-HlbB). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-## 📜Table of contents
+## Table of contents
 
-- [Overview](#👁️overview)
-  - [The challenge](#🏃‍♀️the-challenge)
-  - [Added Features](#💅added-features)
-  - [Setup](#🛠️setup)
-  - [Screenshot](#📸screenshot)
-  - [Links](#🔗links)
-- [My process](#🚨my-process)
-  - [Built with](#⚙️built-with)
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Added Features](#added-features)
+  - [Setup](#setup)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
 
-## 👁️Overview
+## Overview
 
-### 🏃‍♀️The challenge
+### The challenge
 
 Users should be able to:
 
@@ -30,7 +30,7 @@ Users should be able to:
 - **Bonus**: Keep track of any changes, even after refreshing the browser (`localStorage` could be used for this if you're not building out a full-stack app)
 - **Bonus**: Build this project as a full-stack application
 
-### 💅Added Features
+### Added Features
 
 - **Color Picking for Each Column**: Users can choose custom colors for individual columns, aiding in visual organization and task categorization.
 
@@ -40,7 +40,7 @@ Users should be able to:
 
 - **Access Without Login**: Enable basic access to the app's features without requiring users to log in, improving accessibility and user engagement.
 
-### 🛠️Setup
+### Setup
 
 #### Step 1: Clone Repository
 
@@ -111,18 +111,18 @@ yarn install
 npm run dev
 ```
 
-### 📸Screenshot
+### Screenshot
 
 ![Screenshot of Kanban Web App](./screenshot.png)
 
-### 🔗Links
+### Links
 
 - Solution URL: ---> [LINK](https://www.frontendmentor.io/solutions/kanban-board-web-application-developed-with-mern-stack-cdV3o8b__z)
 - Live Site URL: ---> [LINK](https://fem-kanban.onrender.com/)
 
-## 🚨My process
+## My process
 
-### ⚙️Built with
+### Built with
 
 - [React](https://react.dev/): Makes building user interfaces simpler.
 - [Radix UI](https://www.radix-ui.com/): A library for building accessible, composable, and flexible UI components in React.
