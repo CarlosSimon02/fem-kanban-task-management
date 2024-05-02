@@ -4,6 +4,7 @@ import { useGetMyTheme } from "@/api/MyThemeApi";
 import { useCreateMyUser } from "@/api/MyUserApi";
 import { boards as JSONDataBoards } from "@/data/data.json";
 import LoadingPage from "@/pages/LoadingPage";
+import ReloadPage from "@/pages/ReloadPage";
 import { useBoardStore } from "@/store/boardStore";
 import { useThemeStore } from "@/store/themeStore";
 import { BoardState, Theme } from "@/types";
@@ -47,15 +48,32 @@ type LoadDataProviderProps = {
 };
 
 const LoadDataProvider = ({ children }: LoadDataProviderProps) => {
-  const { isAuthenticated, user, isLoading: isAuthLoading } = useAuth0();
+  const {
+    isAuthenticated,
+    user,
+    isLoading: isAuthLoading,
+    error: authError,
+  } = useAuth0();
   const setStoreTheme = useThemeStore((state) => state.setTheme);
   const setStoreBoards = useBoardStore((state) => state.setBoards);
   const setStoreCurrentBoardIndex = useBoardStore(
     (state) => state.setCurrentBoardIndex,
   );
-  const { getTheme, isLoading: isThemeLoading } = useGetMyTheme();
-  const { getBoards, isLoading: isBoardsLoading } = useGetMyBoards();
-  const { createUser, isLoading: isUserLoading } = useCreateMyUser();
+  const {
+    getTheme,
+    isLoading: isThemeLoading,
+    isError: isThemeError,
+  } = useGetMyTheme();
+  const {
+    getBoards,
+    isLoading: isBoardsLoading,
+    isError: isBoardsError,
+  } = useGetMyBoards();
+  const {
+    createUser,
+    isLoading: isUserLoading,
+    isError: isUserError,
+  } = useCreateMyUser();
   const { getCurrentBoardIndex } = useGetMyCurrentBoardIndex();
 
   const hasLoaded = useRef(false);
@@ -144,6 +162,15 @@ const LoadDataProvider = ({ children }: LoadDataProviderProps) => {
     !hasLoaded
   )
     return <LoadingPage />;
+
+  if (
+    authError ||
+    isUserError ||
+    isThemeError ||
+    isBoardsError ||
+    !navigator.onLine
+  )
+    return <ReloadPage />;
 
   return <>{children}</>;
 };
