@@ -52,7 +52,9 @@ git clone https://github.com/CarlosSimon02/fem-kanban-task-management
 code fem-kanban-task-management
 ```
 
-#### Step 2: Configure the environment variables in `.env.example` and rename it to `.env`
+#### Step 2: Setup [MongoDB](https://www.mongodb.com/docs/atlas/getting-started/?_ga=2.5998448.2143569430.1714646061-831054883.1714642664) and [Auth0](https://auth0.com/docs/get-started)
+
+#### Step 3: Configure the environment variables in `.env.example` and rename it to `.env`
 
 ./frontend
 
@@ -77,7 +79,7 @@ AUTH0_AUDIENCE=#your-auth0-audience
 AUTH0_ISSUER_BASE_URL=#your-auth0-issuer-base-url
 ```
 
-#### Step3: Install dependencies and run the development server
+#### Step 4: Install dependencies and run the development server
 
 ```bash
 cd frontend
