@@ -1,0 +1,31 @@
+{
+  "name": "Kanban",
+  "short_name": "Kanban",
+  "description": "Welcome to Kanban app, a powerful tool designed to streamline your task management and organize your workflows efficiently. This app follows the Kanban methodology, allowing you to visualize your tasks and track their progress through customizable boards.",
+  "start_url": ".",
+  "categories": [
+    "productivity",
+    "utilities",
+    "business",
+    "developer tools",
+    "education",
+    "lifestyle",
+    "office",
+    "design & creativity"
+  ],
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}
