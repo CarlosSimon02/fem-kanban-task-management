@@ -15,16 +15,18 @@ const RootPage = () => {
     currentBoardIndex !== null && currentBoardIndex !== undefined;
 
   useEffect(() => {
-    if (isAuthenticated) {
-      toast("HI THERE!!", {
-        description: "You're now logged in and ready to access all features.",
-      });
-    } else {
-      toast("HI THERE!!", {
-        description:
-          "This web app utilizes 'localStorage' to store your data. Please log in to access your data across devices.",
-      });
-    }
+    setTimeout(() => {
+      if (isAuthenticated) {
+        toast("HI THERE!!", {
+          description: "You're now logged in and ready to access all features.",
+        });
+      } else {
+        toast("HI THERE!!", {
+          description:
+            "This web app utilizes 'localStorage' to store your data. Please log in to access your data across devices.",
+        });
+      }
+    });
   }, [isAuthenticated]);
 
   return (
